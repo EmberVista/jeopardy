@@ -27,11 +27,19 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
     setAnswered(true);
     setAnswerCorrect(isCorrect);
     onAnswer(isCorrect);
-    
-    // Wait a moment to show the result before closing
-    setTimeout(() => {
-      onClose();
-    }, 1500);
+  };
+
+  const handleReveal = () => {
+    setShowAnswer(true);
+    if (isMultipleChoice) {
+      const isCorrect =
+        selectedAnswer?.toLowerCase() === question.answer.toLowerCase();
+      handleAnswer(!!isCorrect);
+    }
+  };
+
+  const handleContinue = () => {
+    onClose();
   };
   
   const isMultipleChoice = question.choices && question.choices.length > 0;
@@ -80,7 +88,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               {!showAnswer ? (
                 <button
                   className="bg-yellow-500 text-blue-900 px-6 py-3 rounded-md font-bold text-lg hover:bg-yellow-400 transition-all"
-                  onClick={() => setShowAnswer(true)}
+                  onClick={handleReveal}
                 >
                   Reveal Answer
                 </button>
@@ -94,8 +102,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           )}
         </div>
       </div>
-      
-      {showAnswer && !answered && (
+
+      {showAnswer && !answered && !isMultipleChoice && (
         <div className="mt-8 flex justify-center space-x-6">
           <button
             className="flex items-center space-x-2 bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-md font-bold"
@@ -104,7 +112,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             <Check className="w-5 h-5" />
             <span>Correct</span>
           </button>
-          
+
           <button
             className="flex items-center space-x-2 bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-md font-bold"
             onClick={() => handleAnswer(false)}
@@ -114,12 +122,22 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           </button>
         </div>
       )}
-      
+
       {answered && (
         <div className="mt-8 text-center">
+codex/locate-and-fix-bug-mz8ygo
+          <div className={`text-2xl font-bold ${answerCorrect ? 'text-green-400' : 'text-red-400'}`}>
+
           <div className={`text-2xl font-bold ${answerCorrect ? 'text-green-400' : 'text-red-400'}`}> 
+
             {answerCorrect ? 'Correct!' : 'Incorrect!'}
           </div>
+          <button
+            className="mt-4 bg-yellow-500 text-blue-900 px-6 py-3 rounded-md font-bold text-lg hover:bg-yellow-400 transition-all"
+            onClick={handleContinue}
+          >
+            Continue Game
+          </button>
         </div>
       )}
     </div>
