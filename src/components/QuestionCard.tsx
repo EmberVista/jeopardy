@@ -18,12 +18,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
+  const [answerCorrect, setAnswerCorrect] = useState<boolean | null>(null);
   
   const handleAnswer = (isCorrect: boolean) => {
     if (!showAnswer) {
       return; // Prevent answering before revealing the answer
     }
     setAnswered(true);
+    setAnswerCorrect(isCorrect);
     onAnswer(isCorrect);
     
     // Wait a moment to show the result before closing
@@ -115,8 +117,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
       
       {answered && (
         <div className="mt-8 text-center">
-          <div className={`text-2xl font-bold ${selectedAnswer === question.answer ? 'text-green-400' : 'text-red-400'}`}>
-            {selectedAnswer === question.answer ? 'Correct!' : 'Incorrect!'}
+          <div className={`text-2xl font-bold ${answerCorrect ? 'text-green-400' : 'text-red-400'}`}> 
+            {answerCorrect ? 'Correct!' : 'Incorrect!'}
           </div>
         </div>
       )}
