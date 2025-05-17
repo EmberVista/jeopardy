@@ -125,7 +125,11 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {answered && (
         <div className="mt-8 text-center">
+codex/locate-and-fix-bug-mz8ygo
           <div className={`text-2xl font-bold ${answerCorrect ? 'text-green-400' : 'text-red-400'}`}>
+
+          <div className={`text-2xl font-bold ${answerCorrect ? 'text-green-400' : 'text-red-400'}`}> 
+
             {answerCorrect ? 'Correct!' : 'Incorrect!'}
           </div>
           <button
